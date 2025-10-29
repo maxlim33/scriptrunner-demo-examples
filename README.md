@@ -1,0 +1,114 @@
+# ScriptRunner Migration Suite Development and Deployment Tool
+
+This sample repository provides a template for developing, testing, and deploying scripts for ScriptRunner Cloud from a
+local command line and IDE.
+
+## Try it
+
+You can clone this using Git (or your favorite Git GUI, such as SourceTree). 
+We recommend cloning to a different subdirectory for each migration you're working on. For example:
+
+`git clone https://bitbucket.org/adaptavistlabs/migration-example-project.git migration-x`
+
+### Install Java
+
+You will also need to have a Java Developer Kit (JDK), version 17 or later installed to work with this project. We
+recommend using [SDKMAN!](https://sdkman.io/) to manage Java installations.
+
+## Set Up Credentials and Point to Instance
+
+You need to specify which Jira Cloud instance the scripts should deploy to and the credentials to connect to it.
+
+Create a new API token from [your Atlassian profile](https://id.atlassian.com/manage-profile/security/api-tokens). We
+recommend creating a regular API token without scopes.
+
+**Note:** Make sure you copy this token because it will not be visible once closed. We recommend saving it in a password
+manager.
+
+**Warning:** Atlassian API tokens allow a user to act as you on any instance connected to your Atlassian account.
+Be as protective of this token as you would any password.
+
+Update `~/.gradle/gradle.properties` with the following properties set (without the square brackets):
+
+```properties
+atlassianUser=[your Adaptavist email address]
+atlassianToken=[your token from the previous step]
+```
+
+Update the gradle.properties file in this project to point to the Atlassian instance you want to work with.
+```properties
+targetAtlassianSite=https://your-instance-goes-here.atlassian.net
+```
+
+Keeping your credentials in your user home gradle.properties file (`~/.gradle/gradle.properties`) will allow you to
+reuse them across multiple projects. Setting the target instance in the local gradle.properties file will make it easier
+if you have multiple engagements in flight, each one in different directories. It will also save you from publishing
+them somewhere that you shouldn't.
+
+## Configuration and Code
+The Groovy code for your listeners can go in the cloud/src/main/groovy folder. 
+To help with migrations and allow a side-by-side comparison of DataCenter and Cloud scripts, your DataCenter scripts can go in the 
+onprem/src/main/groovy directory.
+
+The configuration for your Cloud scripts is defined in the cloud/src/main/resources/extensions.yaml file.
+
+## Using an IDE
+
+Any IDE with Gradle and Groovy support can add value to this project, but we
+recommend [IntelliJ](https://www.jetbrains.com/idea/download/?section=mac). The free Community Edition supports
+everything that you need to use this project.
+
+## Automated Deployment
+
+Scripts and their configuration can be deployed to the configured cloud instance using various Gradle tasks.
+
+You'll need to define the configuration for each script manually in `cloud/src/main/resources/extensions.yaml`. 
+Only script fields, listeners, and jobs are supported currently, though support for all features is on the way!
+
+There are examples in there to start you off, but don't keep them unless you *actually* want those scripts in your
+instance. Likewise, make sure to carefully verify any configuration you get from the Migration Agent or other AI-based 
+tools. 
+
+Once you have some configuration in extensions.yaml, the project will automatically configure Gradle tasks for each
+script configuration. Tasks can either be run from the command line (eg `./gradlew cloud:deploy-all`) or from the Gradle
+tool window in IntelliJ IDEA (or your IDE of choice). There are tasks to deploy scripts in bulk:
+
+    ./gradlew cloud:deploy-all - Deploy all extensions
+    ./gradlew cloud:deploy-listener-all - Deploy all listeners
+    ./gradlew cloud:deploy-scriptField-all - Deploy all script fields
+    ./gradlew cloud:deploy-job-all - Deploy all jobs
+
+There will also be tasks to deploy individual scripts. This can be useful if you only want to verify your most recent
+change is correct. For example, some of our pre-configured samples will generate tasks like these:
+
+    ./gradlew "deploy-job-Create time logging issue"
+    ./gradlew "deploy-scriptField-Date Difference"
+    ./gradlew "deploy-listener-Add a definition of done checklist to an issue on creation"
+
+For the Gradle task name, listeners are identified by their description. Script fields and script jobs by their name.
+
+If there are errors in the YAML, the plugin will fail to apply and log out any errors received on any Gradle task.
+
+## Dynamic Members for Better Autocompletion
+
+To provide better autocompletion for scripts, we provide some context for the variables and methods that are always
+imported in ScriptRunner. This includes the `logger`, your `baseUrl`, and
+the [methods from Unirest](https://docs.adaptavist.com/sr4jc/latest/get-started/technical-background#unirest) which are
+imported automatically into most script contexts. These are defined in the `cloud/src/main/groovy/cloud.gdsl` file,
+which uses [IntelliJ IDEA's GroovyDSL Scripting Framework](https://youtrack.jetbrains.com/articles/GROOVY-A-15796912).
+
+You may want to set up more dynamic members for a specific script to aid development.
+See https://youtrack.jetbrains.com/articles/GROOVY-A-12779640 for details on how to do that via the IntelliJ UI.
+
+You may want some of the following, depending on the context you are working in:
+
+| Name         | Type                                             | Contexts where useful                                                 |
+|--------------|--------------------------------------------------|-----------------------------------------------------------------------|
+| issue        | com.atlassian.jira.rest.clientv2.model.IssueBean | Escalation Services                                                   |
+| issue        | java.util.Map                                    | Workflow functions, Listeners on issue-specific events, Script Fields |
+| webhookEvent | java.lang.String                                 | Listeners                                                             |
+| timestamp    | java.lang.String                                 | Listeners                                                             |
+
+## Further information
+
+For further information read the [documentation on our website](https://docs.adaptavist.com/sms/).

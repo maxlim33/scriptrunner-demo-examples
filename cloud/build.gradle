@@ -1,0 +1,5 @@
+dependencies {
+    implementation platform(libs.sr.jira.cloud.platform)
+    implementation libs.bundles.customer.scripting.platform
+    implementation libs.hapi.cloud.jira
+}

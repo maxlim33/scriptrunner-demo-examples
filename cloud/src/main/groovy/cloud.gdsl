@@ -1,0 +1,19 @@
+// Groovy DSL file to provide IntelliJ IDEA with dynamic member support for cloud scripts
+// This file enables code completion and resolution for context variables
+// used in ScriptRunner. See documentation for GDSL at https://youtrack.jetbrains.com/articles/GROOVY-A-15796912
+
+def ctx = context(
+        scope: scriptScope()
+)
+
+contributor([ctx]) {
+    //Context variables for all contexts
+    property name: 'logger', type: 'org.slf4j.Logger'
+    property name: 'baseUrl', type: 'java.lang.String'
+
+    //Unirest methods
+    method name: "get", type: "io.github.openunirest.request.GetRequest", params: [url: "String"]
+    method name: "post", type: "io.github.openunirest.request.HttpRequestWithBody", params: [url: "String"]
+    method name: "put", type: "io.github.openunirest.request.HttpRequestWithBody", params: [url: "String"]
+    method name: "delete", type: "io.github.openunirest.request.HttpRequestWithBody", params: [url: "String"]
+}

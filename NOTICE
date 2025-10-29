@@ -1,0 +1,23 @@
+ScriptRunner Migration Sample Project
+Copyright 2025 The Adaptavist Group
+
+This product includes software developed at The Adaptavist Group (http://www.adaptavist.com/), released under the Apache
+License (Version 2.0).
+
+The notice file here is left as a placeholder for derivative works with strict compliance requirements for consuming
+open source software. Just change this file to note which files are under the Apache License and change the LICENSE file
+in the root directory to whatever license you intend to use for your own scripts.
+
+The following is an example of files you might keep in your own migration project which would still be Apache licensed.
+
+The following files are licensed under the Apache License (2.0):
+* gradle/libs.versions.toml
+* build.gradle
+* cloud/build.gradle
+* onprem/build.gradle
+* .gitignore
+* README.md
+
+For projects that do not have strict compliance requirements, feel free to ignore this file and just get on with it. 😀
+
+For more information about the purpose of a notice file, see the text of the the Apache License section 4, Redistribution.

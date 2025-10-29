@@ -1,0 +1,10 @@
+dependencies {
+    implementation 'org.apache.groovy:groovy-all:4.0.11'
+
+    //noinspection VulnerableLibrariesLocal
+    implementation ('com.atlassian.jira:jira-api:9.0.0') {
+        exclude(group: 'jta', module: 'jta')
+    }
+
+    implementation 'com.onresolve.jira.groovy:groovyrunner:8.31.0@jar'
+}

@@ -1,0 +1,40 @@
+scriptfields:
+  - description: "Difference between updated date and created date in days"
+    uuid: "c5f4766f-23d4-41bc-b4a9-07ed3f167165"
+    name: "Date Difference"
+    scriptedFieldType: "TEXT_FIELD"
+    path: "CalculateDateDifference.groovy"
+
+listeners:
+  - description: "Add comment on issue creation with support SLA and documentation link"
+    uuid: "9d114a5b-5a28-445f-acd9-5adbdcec1ab1"
+    events:
+      - jira:issue_created
+    path: "CommentOnCreate.groovy"
+    executionUser: ADD_ON
+    projects:
+      - "JRTWO"
+  - description: "Add a definition of done checklist to an issue on creation"
+    uuid: "625a3d1c-173a-4938-8874-08c4d05812ec"
+    events:
+      - jira:issue_created
+    path: "DefinitionOfDoneListener.groovy"
+    executionUser: ADD_ON
+    projects:
+      - "JRTWO"
+
+jobs:
+  - uuid: "1b22241f-ada9-4a4e-bce0-0de13a35074c"
+    name: "Create time logging issue"
+    cronExpression: "0 0 0 1 * ?"
+    path: "CreateTimeLoggingIssue.groovy"
+    atlassianUser:
+      accountId: "557058:d2e5bd5c-dc49-41eb-a6f0-5e01093666c1"
+    enabled: true
+  - uuid: "301355c2-292a-43ab-81a6-8d4e6a8f9148"
+    name: "Create Release"
+    cronExpression: "0 0 0 1,15 * ?"
+    path: "CreateRelease.groovy"
+    atlassianUser:
+      accountId: "557058:d2e5bd5c-dc49-41eb-a6f0-5e01093666c1"
+    enabled: true
