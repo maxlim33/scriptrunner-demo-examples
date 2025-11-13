@@ -19,6 +19,27 @@ recommend using [SDKMAN!](https://sdkman.io/) to manage Java installations.
 
 You need to specify which Jira Cloud instance the scripts should deploy to and the credentials to connect to it.
 
+You will need to update two files to do this. 
+
+One file will be in this repository: the gradle.properties, which will be shared with anyone who works on this project 
+with you. This is where you will specify the URL that points to your Atlassian Cloud Instance.
+
+The other file will be in a different directory, though it will also be named gradle.properties. The directory is 
+the [Gradle user home directory](https://docs.gradle.org/current/userguide/directory_layout.html#dir:gradle_user_home),
+which is a hidden directory inside your user home directory. Your user home directory will be in different locations, 
+depending on your operating system. Assuming your username is `me`, it might be /Users/home/me on Mac OSX, 
+C:\Users\me on Windows, or /home/me on Linux.
+
+The Gradle user home directory's gradle.properties file is where you will put the credentials, which you want to keep 
+private to yourself.
+In that file, you will specify the Atlassian User and Token that allow you to sign in to your Atlassian Cloud Site.
+
+We will refer to the gradle.properties file in your user home directory as `~/.gradle/gradle.properties` for the rest of
+this document.  Different people working on this project will have different credentials. As such, they will each specify their own
+credentials in their user home.
+
+### Getting the credentials
+
 Create a new API token from [your Atlassian profile](https://id.atlassian.com/manage-profile/security/api-tokens). We
 recommend creating a regular API token without scopes.
 
@@ -28,7 +49,9 @@ manager.
 **Warning:** Atlassian API tokens allow a user to act as you on any instance connected to your Atlassian account.
 Be as protective of this token as you would any password.
 
-Update `~/.gradle/gradle.properties` with the following properties set (without the square brackets):
+### Updating the files
+
+Update your user home gradle.properties file `~/.gradle/gradle.properties` with the following properties set (without the square brackets):
 
 ```properties
 atlassianUser=[your Adaptavist email address]
