@@ -96,10 +96,10 @@ Once you have some configuration in extensions.yaml, the project will automatica
 script configuration. Tasks can either be run from the command line (eg `./gradlew cloud:deploy-all`) or from the Gradle
 tool window in IntelliJ IDEA (or your IDE of choice). There are tasks to deploy scripts in bulk:
 
-    ./gradlew cloud:deploy-all - Deploy all extensions
-    ./gradlew cloud:deploy-listener-all - Deploy all listeners
-    ./gradlew cloud:deploy-scriptField-all - Deploy all script fields
-    ./gradlew cloud:deploy-job-all - Deploy all jobs
+    ./gradlew cloud:deploy-all # Deploy all extensions
+    ./gradlew cloud:deploy-listener-all # Deploy all listeners
+    ./gradlew cloud:deploy-scriptField-all # Deploy all script fields
+    ./gradlew cloud:deploy-job-all # Deploy all jobs
 
 There will also be tasks to deploy individual scripts. This can be useful if you only want to verify your most recent
 change is correct. For example, some of our pre-configured samples will generate tasks like these:
