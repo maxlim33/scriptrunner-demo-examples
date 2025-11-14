@@ -132,6 +132,23 @@ You may want some of the following, depending on the context you are working in:
 | webhookEvent | java.lang.String                                 | Listeners                                                             |
 | timestamp    | java.lang.String                                 | Listeners                                                             |
 
-## Further information
+# Updating the Plugin
+
+A Gradle plugin developed by Adaptavist powers deployments in this project. We are actively working on it, so you will 
+need to apply updates to get additional feature support and bugfixes as we release them.
+
+To update, open the `settings.gradle` file in this project and edit this set of lines:
+
+```gradle
+plugins {
+    id 'com.adaptavist.scriptrunner.migration-settings' version '0.0.6' // Change the version number to the latest release
+}
+```
+
+You can check back in the [sample project on Bitbucket](https://bitbucket.org/adaptavistlabs/migration-example-project/src/main/settings.gradle) 
+or look at the [plugin artifact in our public nexus repository](https://nexus.adaptavist.net/service/rest/repository/browse/external/com/adaptavist/scriptrunner/cloud/migration-dev-and-deployment-plugin/)
+to get the latest version number of the plugin.
+
+# Further information
 
 For further information read the [documentation on our website](https://docs.adaptavist.com/sms/).
