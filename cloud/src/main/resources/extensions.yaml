@@ -38,3 +38,42 @@ jobs:
     atlassianUser:
       accountId: "557058:d2e5bd5c-dc49-41eb-a6f0-5e01093666c1"
     enabled: true
+
+behaviours:
+  - name: "Test"
+    description: "My Behaviour"
+    uuid: "d89c8588-a060-b07c-879f-98cff9c1d26b"
+    enabled: true
+    executionUser: ADD_ON
+    config:
+      - fieldName: ""
+        fieldUuid: "81a205f1-721a-4627-a3f2-c9767e1e83c4"
+        path: behaviourA.ts
+        event:
+          - "ONLOAD"
+          - "ONCHANGE"
+        viewTypes:
+          - "GIC"
+          - "IssueTransition"
+          - "IssueView"
+        affectedFields:
+          - "summary"
+      - fieldName: ""
+        fieldUuid: "81a205f1-721a-4627-a3f2-c9767e1ex3c4"
+        path: subpackagea/behaviourB.ts
+        event:
+          - "ONLOAD"
+          - "ONCHANGE"
+        viewTypes:
+          - "GIC"
+          - "IssueTransition"
+          - "IssueView"
+        affectedFields:
+          - "description"
+    projects:
+      - "10002" #TODO: These should be mappable from keys
+    issueTypes:
+      - "10005"
+    mappings:
+      "10002":
+        - "10005"
