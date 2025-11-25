@@ -1,0 +1,26 @@
+diff --git a/settings.gradle b/settings.gradle
+index 6aa07a7..eed70fc 100644
+--- a/settings.gradle
++++ b/settings.gradle
+@@ -6,8 +6,12 @@
+  */
+ 
+ pluginManagement {
++
++    includeBuild('../sr-for-connect/migration-dev-and-deployment-plugin')
++
+     repositories {
+         gradlePluginPortal()
++        mavenLocal()
+         // Use Maven Central for resolving dependencies.
+         mavenCentral()
+ 
+@@ -25,7 +29,7 @@ pluginManagement {
+ }
+ 
+ plugins {
+-    id 'com.adaptavist.scriptrunner.migration-settings' version '0.0.8'
++    id 'com.adaptavist.scriptrunner.migration-settings'
+ }
+ 
+ rootProject.name = 'migration'
