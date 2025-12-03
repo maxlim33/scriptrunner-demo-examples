@@ -1,7 +1,7 @@
 console.warn("Running")
 // Access the context for the UI Modification
 
-const context = await getContext()
+const context : any = await getContext()
 
 
 // Get the current issue key
