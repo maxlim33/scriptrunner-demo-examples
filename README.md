@@ -152,3 +152,17 @@ to get the latest version number of the plugin.
 # Further information
 
 For further information read the [documentation on our website](https://docs.adaptavist.com/sms/).
+
+# Known Issues
+
+## TypeScript Compilation Warnings
+
+For Behaviours, the TypeScript compiler may emit some errors during compilation of the TypeScript code into JavaScript. Some of these errors may indicate problems in your script, but some can be safely ignored. 
+
+Specifically, warnings like these are expected. We're working on better ways to suppress them.
+🚧 Please pardon our progress. 🚧
+
+```properties
+../../src/main/typescript/behaviours.d.ts(388,5): error TS1038: A 'declare' modifier cannot be used in an already ambient context.
+../../src/main/typescript/behaviourA.ts(14,15): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+```

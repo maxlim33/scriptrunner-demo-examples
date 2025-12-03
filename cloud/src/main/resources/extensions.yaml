@@ -65,8 +65,10 @@ behaviours:
           - "ONLOAD"
           - "ONCHANGE"
         viewTypes:
-          - "GIC"
-          - "IssueTransition"
+          # These are options from Atlassian's UI Modifications framework, determining where your Behaviour will run.
+          # See https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-ui-modifications/
+          - "GIC" # Global Issue Create page
+          - "IssueTransition" # The new Jira issue transition experience - see https://community.atlassian.com/forums/Jira-articles/Now-GA-try-the-new-issue-transition-experience-in-Jira/ba-p/2734436
           - "IssueView"
         affectedFields:
           - "description"
