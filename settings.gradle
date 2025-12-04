@@ -24,7 +24,7 @@ pluginManagement {
 }
 
 plugins {
-    id 'com.adaptavist.scriptrunner.migration-settings' version '0.0.6'
+    id 'com.adaptavist.scriptrunner.migration-settings' version '0.0.8'
 }
 
 rootProject.name = 'migration'
