@@ -4,13 +4,17 @@ dependencies {
     implementation libs.hapi.cloud.jira
 }
 
-final String ACCOUNT_EMAIL = property('atlassianUser')
-final String ACCOUNT_TOKEN = property('atlassianToken')
-final String BASE_URL = property('targetAtlassianSite')
+/********** User Input Start **********/
 
 final CONFLUENCE_SPACE_KEY = 'HR'
 final TEMPLATE_TITLE = 'ACME offer letter'
 final LOGO_LINK = "/wiki/download/attachments/2392196/spot-trophy.png?api=v2"
+
+/********** User Input End **********/
+
+final String ACCOUNT_EMAIL = property('atlassianUser')
+final String ACCOUNT_TOKEN = property('atlassianToken')
+final String BASE_URL = property('targetAtlassianSite')
 
 buildscript {
     repositories {
@@ -617,8 +621,8 @@ Unirest.config().with {
     ))
 }
 
-tasks.register('Generate offer letter dynamically as Confluence page and export as PDF') { task ->
-    group = 'implementations'
+tasks.register('implement-Generate offer letter dynamically as Confluence page and export as PDF') { task ->
+    group = 'implementation'
 
     doLast {
         def confluenceSpaceId = (Unirest.get("/wiki/api/v2/spaces?keys=${CONFLUENCE_SPACE_KEY}").asObject(Map).body['results']['id'] as List).first()
