@@ -1,6 +1,6 @@
 # About This Repository
 
-This repository contains ScriptRunner demonstration examples and is a fork of the [ScriptRunner Migration Project](https://bitbucket.org/adaptavistlabs/migration-example-project) maintained by Adaptavist.
+This repository contains ScriptRunner demonstration examples and is a fork of the [ScriptRunner Migration Example Project](https://bitbucket.org/adaptavistlabs/migration-example-project) maintained by Adaptavist.
 
 The upstream project provides a Gradle plugin that enables programmatic deployment of ScriptRunner configurations. This fork extends that functionality with additional Gradle features tailored for my demonstration purposes.
 
@@ -29,7 +29,7 @@ Future iterations will aim to provide a more streamlined approach for authoring 
 
 ---
 
-**The following documentation is from the upstream [ScriptRunner Migration Project](https://bitbucket.org/adaptavistlabs/migration-example-project).**
+**The following documentation is from the upstream [ScriptRunner Migration Example Project](https://bitbucket.org/adaptavistlabs/migration-example-project).**
 
 ---
 

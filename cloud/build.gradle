@@ -628,7 +628,7 @@ Unirest.config().with {
     ))
 }
 
-tasks.register('implement-Generate letter dynamically as Confluence page from Jira and attach PDF') { task ->
+tasks.register('implement-Dynamic Confluence page generation from Jira and attach PDF') { task ->
     group = 'implementation'
     finalizedBy 'deploy-listener-Generate letter as Confluence page on transition'
 
