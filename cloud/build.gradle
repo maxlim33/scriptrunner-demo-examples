@@ -623,6 +623,7 @@ Unirest.config().with {
 
 tasks.register('implement-Generate offer letter dynamically as Confluence page and export as PDF') { task ->
     group = 'implementation'
+    finalizedBy 'deploy-listener-Generate letter as Confluence page on transition'
 
     doLast {
         def confluenceSpaceId = (Unirest.get("/wiki/api/v2/spaces?keys=${CONFLUENCE_SPACE_KEY}").asObject(Map).body['results']['id'] as List).first()

@@ -22,6 +22,20 @@ listeners:
     executionUser: ADD_ON
     projects:
       - "JRTWO"
+  - description: "Generate letter as Confluence page on transition"
+    uuid: "dc6a9adb-0b46-4bf9-ad64-fb5747f9d5a3"
+    events:
+      - jira:issue_updated
+    path: "GenerateOfferLetter.groovy"
+    executionCondition: |-
+      issue.changelogs[0].items.some(changelogItem => 
+          changelogItem.field == 'status'
+          && changelogItem.fromString == 'Open'
+          && changelogItem.toString == 'Implementing'
+      )
+    executionUser: ADD_ON
+    projects:
+      - "HR"
 
 jobs:
   - uuid: "1b22241f-ada9-4a4e-bce0-0de13a35074c"

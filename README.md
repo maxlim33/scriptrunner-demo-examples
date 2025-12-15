@@ -6,6 +6,27 @@ The upstream project provides a Gradle plugin that enables programmatic deployme
 
 > **Disclaimer:** The custom Gradle additions in this fork are experimental and may be rough around the edges — I'm learning as I go!
 
+## Automated Setup and Deployment
+
+Beyond standard ScriptRunner configuration deployment, this fork introduces a custom Gradle task group called `implementation`. Tasks within this group execute the necessary setup scripts required to prepare a complete demonstration environment.
+
+Currently, this repository includes only one implementation example, defined in `cloud/build.gradle`:
+
+```
+./gradlew "implement-Generate offer letter dynamically as Confluence page and export as PDF"
+```
+
+This implementation performs the following actions:
+1. Configures PDF export settings in a designated Confluence space.
+2. Creates an offer letter template within the same Confluence space.
+3. Deploys a ScriptRunner listener that generates an offer letter and attaches its PDF version to a Jira issue upon a specific workflow transition.
+
+**Prerequisites:**
+1. Configure the required parameters in `cloud/build.gradle`.
+2. Configure the required parameters in `GenerateOfferLetter.groovy`.
+
+Future iterations will aim to provide a more streamlined approach for authoring setup scripts.
+
 ---
 
 **The following documentation is from the upstream [ScriptRunner Migration Project](https://bitbucket.org/adaptavistlabs/migration-example-project).**
