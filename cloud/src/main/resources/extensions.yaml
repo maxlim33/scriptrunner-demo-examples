@@ -23,7 +23,7 @@ listeners:
     projects:
       - "JRTWO"
   - description: "Generate letter as Confluence page on transition"
-    uuid: "dc6a9adb-0b46-4bf9-ad64-fb5747f9d5a3"
+    uuid: "23ab86fa-ece7-45bd-967a-dc20a3a5d939"
     events:
       - jira:issue_updated
     path: "GenerateOfferLetter.groovy"

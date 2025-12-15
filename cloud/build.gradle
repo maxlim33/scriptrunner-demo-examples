@@ -4,17 +4,17 @@ dependencies {
     implementation libs.hapi.cloud.jira
 }
 
+final String ACCOUNT_EMAIL = property('atlassianUser')
+final String ACCOUNT_TOKEN = property('atlassianToken')
+final String BASE_URL = property('targetAtlassianSite')
+
 /********** User Input Start **********/
 
 final CONFLUENCE_SPACE_KEY = 'HR'
 final TEMPLATE_TITLE = 'ACME offer letter'
-final LOGO_LINK = "/wiki/download/attachments/2392196/spot-trophy.png?api=v2"
+final LOGO_LINK = "$BASE_URL/wiki/download/attachments/2392196/spot-trophy.png?api=v2"
 
 /********** User Input End **********/
-
-final String ACCOUNT_EMAIL = property('atlassianUser')
-final String ACCOUNT_TOKEN = property('atlassianToken')
-final String BASE_URL = property('targetAtlassianSite')
 
 buildscript {
     repositories {
@@ -447,6 +447,13 @@ final TEMPLATE_ADF = [
             "type": "paragraph",
             "attrs": [
                 "localId": "8d5e8117-be72-493c-92ac-2604f3297c2e"
+            ],
+            "content": []
+        ],
+        [
+            "type": "paragraph",
+            "attrs": [
+                "localId": "a7c38790-2546-48cc-a157-4142d29efc08"
             ],
             "content": []
         ],

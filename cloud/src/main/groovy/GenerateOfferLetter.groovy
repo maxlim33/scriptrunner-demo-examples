@@ -1,5 +1,5 @@
 /**
- * Generate Confluence page from a template by filling in variables with Jira data linked.
+ * Generate Confluence page from a template by dynamically filling in variables with Jira data.
  *
  * Prerequisites:
  * - An admin user email and API token are required for calling APIs, not standard Jira and JSM.
@@ -14,7 +14,7 @@
 /********** User Input Start **********/
 
 final CONFLUENCE_SPACE_KEY = 'HR'
-final OFFER_LETTER_TEMPLATE_NAME = 'ACME offer letter'
+final TEMPLATE_NAME = 'ACME offer letter'
 final NAME_CF_NAME = 'Summary'
 final START_DATE_CF_NAME = 'Employee Start date'
 final ROLE_CF_NAME = 'Job title'
@@ -60,7 +60,7 @@ def getTemplatesResponse = post("$baseUrl/cgraphql")
     .asObject(Map)
 assert !getTemplatesResponse.body['errors'] : getTemplatesResponse.body['errors']
 def templates = getTemplatesResponse.body['data']['confluence']['templates']['spaceTemplates'] as List
-def offerLetterTemplateId = templates.find { it['name'] == OFFER_LETTER_TEMPLATE_NAME }['id']
+def offerLetterTemplateId = templates.find { it['name'] == TEMPLATE_NAME }['id']
 
 // This uses instance system time, not user preference time
 def now = LocalDateTime.now()
@@ -68,6 +68,7 @@ def now = LocalDateTime.now()
 def roleTitle = eventIssue.getCustomFieldValue(ROLE_CF_NAME) as String
 def name = eventIssue.getCustomFieldValue(NAME_CF_NAME) as String
 def startDate = (eventIssue.getCustomFieldValue(START_DATE_CF_NAME) as Timestamp).toLocalDate()
+def sentDate = now
 
 def getTemplateAdfResponse = get("/wiki/rest/api/template/${offerLetterTemplateId}")
     .basicAuth(AUTH_USER_EMAIL, AUTH_USER_API_TOKEN)
@@ -80,7 +81,7 @@ def templateAdf = new JsonSlurper().parseText(templateAdfInString) as Map
 replaceVariable(templateAdf, 'position_name_bold' , createBoldTextNode(roleTitle.toUpperCase()))
 replaceVariable(templateAdf, 'position_name' , createTextNode(roleTitle))
 replaceVariable(templateAdf, 'recipient_name', createTextNode(name))
-replaceVariable(templateAdf, 'sent_date', createTextNode(now.format('dd MMMM yyyy')))
+replaceVariable(templateAdf, 'sent_date', createTextNode(sentDate.format('dd MMMM yyyy')))
 replaceVariable(templateAdf, 'effective_date', createTextNode(startDate.format('dd MMMM yyyy')))
 
 def createLetterResponse = post("/wiki/api/v2/pages")
@@ -144,7 +145,7 @@ new URL(downloadLink).withInputStream { inputStream ->
     def attachmentFilename = attachments.first()['filename']
     def commentBody = """\
 This is approved and the offer letter is generated in Confluence: [$reportLink|$reportLink]
-A PDF version is also attached here:\\n\\n[^$attachmentFilename]\\n\\n
+A PDF version is also attached here:[^$attachmentFilename]
 """
 
     def postCommentResponse = post("/rest/servicedeskapi/request/${eventIssue.id}/comment")
