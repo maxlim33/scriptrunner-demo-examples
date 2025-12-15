@@ -26,7 +26,7 @@ listeners:
     uuid: "23ab86fa-ece7-45bd-967a-dc20a3a5d939"
     events:
       - jira:issue_updated
-    path: "GenerateOfferLetter.groovy"
+    path: "GenerateConfluenceLetter.groovy"
     executionCondition: |-
       issue.changelogs[0].items.some(changelogItem => 
           changelogItem.field == 'status'
