@@ -153,6 +153,17 @@ to get the latest version number of the plugin.
 
 For further information read the [documentation on our website](https://docs.adaptavist.com/sms/).
 
+## Working with workflows
+Our assumption is that you will have already run the Jira Cloud Migration Assistant for your instance, and that all of
+your workflows already exist in your target Cloud instance. Likewise, we assume that other apps and Jira native workflow
+conditions, validators, and post functions will exist alongside ScriptRunner workflow functions, but those will not be
+managed in the extensions.yaml file.
+
+There are a few specific limitations to the workflow implementation currently:
+1. Code must be inlined - you can't specify a `path` to the file like you can with other configuration points yet. [YAML Blocks](https://yaml.org/spec/1.2.2/#812-literal-style) may be used for multi-line scripts.
+2. [Condition groups](https://support.atlassian.com/jira-cloud-administration/docs/configure-advanced-issue-workflows/#Group-conditions) 
+    are not supported yet.
+
 # Known Issues
 
 ## TypeScript Compilation Warnings
