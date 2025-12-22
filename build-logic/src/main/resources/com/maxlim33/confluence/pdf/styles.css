@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Visualize page content border */
+/*
+.ak-renderer-document {
+    border: 1px solid red;
+}
+*/
+body, h1, h2, h3, h4, h5, h6, p, a, li, span, div, code {
+    font-family: 'Roboto' !important;
+}
+
+.ak-renderer-document > p {
+  text-align: justify;
+}
+
+/* Target 30mm spaces until main content, to make room for header*/
+/* On first page, a non-adjustable 8mm is observed in addition to margin-top */
+@media print {
+    @page {
+        size: A4;
+        margin-top: 30mm;
+    }
+    @page :first {
+      margin-top: 22mm;
+    }
+}
+
+/* Do not display page title */
+[data-testid="title-wrapper"] {
+  display: none !important;
+}
+
+/* Make monospace texts normal, Confluence treats them as code with a background color */
+code {
+  background-color: transparent !important;
+}
+
+/* Restore margin ONLY for first <p> inside a right-aligned block that is NOT the parent's first child */
+.fabric-editor-block-mark.fabric-editor-alignment[data-align="end"]:not(:first-child) > p:first-child {
+  margin-top: 0.75rem;
+}

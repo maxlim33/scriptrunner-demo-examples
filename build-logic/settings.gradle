@@ -1,0 +1,9 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        maven {
+            url 'https://packages.atlassian.com/maven-public/'
+        }
+    }
+}

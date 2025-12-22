@@ -1,0 +1,19 @@
+mutation CreateTemplateMutation($contentTemplate: CreateContentTemplateInput!) {
+  createTemplate(contentTemplate: $contentTemplate) {
+    templateId
+    body {
+      atlas_doc_format {
+        representation
+        value
+      }
+    }
+    description
+    name
+    space {
+      key
+      id
+    }
+    templateType
+  }
+}
+

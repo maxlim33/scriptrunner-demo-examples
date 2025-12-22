@@ -1,0 +1,15 @@
+mutation PdfExportConfigurationMutation($input: ConfluenceUpdatePdfExportSpaceConfigurationInput!) {
+  confluence {
+    updatePdfExportSpaceConfiguration(input: $input) {
+      success
+      errors {
+        message
+        extensions {
+          errorType
+          statusCode
+        }
+      }
+    }
+  }
+}
+

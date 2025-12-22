@@ -1,0 +1,24 @@
+plugins {
+    id 'groovy-gradle-plugin'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://packages.atlassian.com/maven-public/'
+    }
+}
+
+dependencies {
+    implementation 'com.konghq:unirest-java:3.14.5'
+    implementation 'com.konghq:unirest-objectmapper-jackson:3.14.5'
+}
+
+gradlePlugin {
+    plugins {
+        implementationSetupsPlugin {
+            id = 'com.maxlim33.implementation-setups'
+            implementationClass = 'com.maxlim33.ImplementationSetupsPlugin'
+        }
+    }
+}
