@@ -12,7 +12,7 @@ import kong.unirest.jackson.JacksonObjectMapper
  * Utility class for interacting with Confluence Cloud APIs.
  * Handles authentication, resource loading, and API calls.
  */
-class ConfluenceApiClient {
+class Confluence {
 
     private final String baseUrl
     private final String accountEmail
@@ -25,7 +25,7 @@ class ConfluenceApiClient {
      * @param accountEmail The Atlassian account email
      * @param accountToken The Atlassian API token
      */
-    ConfluenceApiClient(String baseUrl, String accountEmail, String accountToken) {
+    Confluence(String baseUrl, String accountEmail, String accountToken) {
         this.baseUrl = baseUrl
         this.accountEmail = accountEmail
         this.accountToken = accountToken
@@ -55,7 +55,7 @@ class ConfluenceApiClient {
      * @return The resource content as a String
      */
     static String loadResource(String resourcePath) {
-        def inputStream = ConfluenceApiClient.class.classLoader.getResourceAsStream(resourcePath)
+        def inputStream = Confluence.class.classLoader.getResourceAsStream(resourcePath)
         if (!inputStream) {
             throw new IllegalArgumentException("Resource not found: ${resourcePath}")
         }

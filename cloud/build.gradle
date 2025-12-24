@@ -1,3 +1,5 @@
+import com.maxlim33.SetupTask
+
 plugins {
     id('com.maxlim33.implementation-setups')
 }
@@ -6,4 +8,10 @@ dependencies {
     implementation platform(libs.sr.jira.cloud.platform)
     implementation libs.bundles.customer.scripting.platform
     implementation libs.hapi.cloud.jira
+}
+
+tasks.register('test-Dynamic Confluence page generation from Jira and attach PDF', SetupTask) {
+    confluenceSpaceKey = 'HR'
+    templateTitle = 'ACME offer letter'
+    logoLink = "/wiki/download/attachments/2392196/spot-trophy.png?api=v2"
 }
