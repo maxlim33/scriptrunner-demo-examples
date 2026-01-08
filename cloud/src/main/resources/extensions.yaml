@@ -100,8 +100,8 @@ workflows:
               id: "4a2d7de4-3b95-40c5-b359-4dab3dd5824a"
               config:
                 uuid: "7a46c9e7-9980-4164-8f85-4717b44fa9b1"
-                description: "Check if any comments contain disallowed words"
-                expression: "(issue.comments.filter(comment => comment.body.plainText.toLowerCase().includes('disallowed')).length > 0)"
+                description: "Check if any comments contain banned words"
+                expression: "(issue.comments.filter(comment => comment.body.plainText.toLowerCase().includes('banned')).length <= 0)"
                 enabled: true
         validators:
           - parameters:
@@ -109,14 +109,36 @@ workflows:
               config:
                 uuid: "5c3c30b5-a8e8-4d16-b5eb-c4f4a44fbcf8"
                 description: "Check comments"
-                expression: "(issue.comments.filter(comment => comment.body.plainText.toLowerCase().includes('disallowed')).length > 0)"
-                errorMessage: "No disallowed words in the comments."
+                expression: "(issue.comments.filter(comment => comment.body.plainText.toLowerCase().includes('banned')).length <= 0)"
+                errorMessage: "No banned words in the comments."
                 enabled: true
           - parameters:
               id: "414e3381-d974-4286-ac1e-ffa0f895770f"
               config:
                 uuid: "46a851b6-a532-42c5-bd14-50cb6a235a98"
                 description: "This will always be true. It's just an example. Insert your own validator here."
-                expression: "true"
+                expression: "true && !false"
                 errorMessage: "If this failed ScriptRunner is broken."
+                enabled: true
+  - name: "PRAH: Project Management Workflow"
+    transitions:
+      - name: "Done"
+        id: "21" # As a last resort, transitions with the same name can be distinguished by their ID. This is brittle, as IDs can vary between cloud instances for identical transitions.
+        conditions:
+          - parameters:
+              id: "142b758a-5cf3-4619-bdd2-cc40219cc94d"
+              config:
+                uuid: "92246de9-f297-49de-9f04-750b7474a277"
+                description: "Check if any comments contain disallowed words"
+                expression: "(issue.comments.filter(comment => comment.body.plainText.toLowerCase().includes('disallowed')).length <= 0)"
+                enabled: true
+      - name: "Done"
+        id: "41"
+        conditions:
+          - parameters:
+              id: "b4fa9a4c-f580-4f97-a73f-d3c7471e62e7"
+              config:
+                uuid: "ead05c99-02fa-43ca-a703-9f1bc3187e04"
+                description: "Check if the issue description contain disallowed words"
+                expression: "!issue.description.plainText.includes('disallowed')"
                 enabled: true
