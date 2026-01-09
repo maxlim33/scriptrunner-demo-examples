@@ -120,6 +120,32 @@ workflows:
                 expression: "true && !false"
                 errorMessage: "If this failed ScriptRunner is broken."
                 enabled: true
+  - name: "SMURF: Project Management Workflow"
+    transitions:
+      # In workflows where more than one transition has the same name, you can disambiguate statuses using a sourceStatus, targetStatus
+      # Where necessary, you can also specify a transition type (DIRECTED, GLOBAL, INITIAL)
+      - name: "Done"
+        sourceStatus: "In Progress"
+        targetStatus: "Done"
+        conditions:
+          - parameters:
+              id: "ee623f33-2b06-435f-a336-435dc4a3adeb"
+              config:
+                uuid: "2cff4359-af2d-400a-8de9-3253ba4f5c76"
+                description: "Check if any comments contain disallowed words"
+                expression: "(issue.comments.filter(comment => comment.body.plainText.toLowerCase().includes('disallowed')).length <= 0)"
+                enabled: true
+      - name: "Done"
+        sourceStatus: "To Do"
+        targetStatus: "Done"
+        conditions:
+          - parameters:
+              id: "1efc887c-5190-4961-b51b-abdd1c76cfad"
+              config:
+                uuid: "1105f5a5-d0d8-424a-86a3-20bc59c48556"
+                description: "Check if the issue description contain disallowed words"
+                expression: "!issue.description.plainText.includes('disallowed')"
+                enabled: true
   - name: "PRAH: Project Management Workflow"
     transitions:
       - name: "Done"
