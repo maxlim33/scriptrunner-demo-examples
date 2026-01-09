@@ -100,6 +100,7 @@ tool window in IntelliJ IDEA (or your IDE of choice). There are tasks to deploy 
     ./gradlew cloud:deploy-listener-all # Deploy all listeners
     ./gradlew cloud:deploy-scriptField-all # Deploy all script fields
     ./gradlew cloud:deploy-job-all # Deploy all jobs
+    ./gradlew cloud:deploy-workflow-all # Deploy all workflows
 
 There will also be tasks to deploy individual scripts. This can be useful if you only want to verify your most recent
 change is correct. For example, some of our pre-configured samples will generate tasks like these:
@@ -107,6 +108,7 @@ change is correct. For example, some of our pre-configured samples will generate
     ./gradlew "deploy-job-Create time logging issue"
     ./gradlew "deploy-scriptField-Date Difference"
     ./gradlew "deploy-listener-Add a definition of done checklist to an issue on creation"
+    ./gradlew "deploy-workflow-SMURF_ Project Management Workflow"
 
 For the Gradle task name, listeners are identified by their description. Script fields and script jobs by their name.
 
