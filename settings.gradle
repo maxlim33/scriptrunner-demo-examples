@@ -12,20 +12,20 @@ pluginManagement {
         mavenCentral()
 
         maven {
-            url 'https://nexus.adaptavist.net/content/repositories/external/'
+            url = 'https://nexus.adaptavist.net/content/repositories/external/'
         }
         maven {
-            url 'https://nexus.adaptavist.net/content/repositories/external-snapshots/'
+            url = 'https://nexus.adaptavist.net/content/repositories/external-snapshots/'
         }
 
         maven {
-            url 'https://packages.atlassian.com/maven-public/'
+            url = 'https://packages.atlassian.com/maven-public/'
         }
     }
 }
 
 plugins {
-    id 'com.adaptavist.scriptrunner.migration-settings' version '0.0.8'
+    id 'com.adaptavist.scriptrunner.migration-settings' version '0.0.10'
 }
 
 rootProject.name = 'migration'

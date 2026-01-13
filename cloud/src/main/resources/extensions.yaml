@@ -79,3 +79,106 @@ behaviours:
     mappings:
       "10002":
         - "10005"
+
+workflows:
+  - name: "Software Simplified Workflow for Project MARK1"
+    transitions:
+      - name: "Create"
+        postFunctions:
+          - parameters:
+              id: "3d366ad1-1b69-484c-a82f-17eceda55fc9"
+              config:
+                className: "com.adaptavist.sr.cloud.workflow.UpdateIssue"
+                uuid: "5142a571-74a1-4ceb-b2a6-895b1f17e5f5"
+                enabled: true
+                executionUser: "ADD_ON"
+                condition: "true || false"
+                description: "Add comment to issue"
+                additionalCode: |
+                  import java.time.LocalDateTime
+                  Issues.getByKey(issue.key.toString()).addComment("Comment created from ScriptRunner on ${LocalDateTime.now()}")
+      - name: "In Progress"
+        postFunctions:
+          - parameters:
+              id: "5a96894a-204c-416d-8d09-bbbfcb18b8a6"
+              config:
+                className: "com.adaptavist.sr.cloud.workflow.UpdateIssue"
+                uuid: "79aecc0f-b4aa-454a-b91b-4a5c104eadda"
+                enabled: true
+                executionUser: "ADD_ON"
+                condition: "true || false"
+                description: "Add comment to issue"
+                additionalCode: "Issues.getByKey(issue.key.toString()).addComment('Greetings from ScriptRunner')"
+        conditions:
+          - parameters:
+              id: "4a2d7de4-3b95-40c5-b359-4dab3dd5824a"
+              config:
+                uuid: "7a46c9e7-9980-4164-8f85-4717b44fa9b1"
+                description: "Check if any comments contain banned words"
+                expression: "(issue.comments.filter(comment => comment.body.plainText.toLowerCase().includes('banned')).length <= 0)"
+                enabled: true
+        validators:
+          - parameters:
+              id: "b1340bfc-2003-41b2-9beb-621a266b489b"
+              config:
+                uuid: "5c3c30b5-a8e8-4d16-b5eb-c4f4a44fbcf8"
+                description: "Check comments"
+                expression: "(issue.comments.filter(comment => comment.body.plainText.toLowerCase().includes('banned')).length <= 0)"
+                errorMessage: "No banned words in the comments."
+                enabled: true
+          - parameters:
+              id: "414e3381-d974-4286-ac1e-ffa0f895770f"
+              config:
+                uuid: "46a851b6-a532-42c5-bd14-50cb6a235a98"
+                description: "This will always be true. It's just an example. Insert your own validator here."
+                expression: "true && !false"
+                errorMessage: "If this failed ScriptRunner is broken."
+                enabled: true
+  - name: "SMURF: Project Management Workflow"
+    transitions:
+      # In workflows where more than one transition has the same name, you can disambiguate statuses using a sourceStatus, targetStatus
+      # Where necessary, you can also specify a transition type (DIRECTED, GLOBAL, INITIAL)
+      - name: "Done"
+        sourceStatus: "In Progress"
+        targetStatus: "Done"
+        conditions:
+          - parameters:
+              id: "ee623f33-2b06-435f-a336-435dc4a3adeb"
+              config:
+                uuid: "2cff4359-af2d-400a-8de9-3253ba4f5c76"
+                description: "Check if any comments contain disallowed words"
+                expression: "(issue.comments.filter(comment => comment.body.plainText.toLowerCase().includes('disallowed')).length <= 0)"
+                enabled: true
+      - name: "Done"
+        sourceStatus: "To Do"
+        targetStatus: "Done"
+        conditions:
+          - parameters:
+              id: "1efc887c-5190-4961-b51b-abdd1c76cfad"
+              config:
+                uuid: "1105f5a5-d0d8-424a-86a3-20bc59c48556"
+                description: "Check if the issue description contain disallowed words"
+                expression: "!issue.description.plainText.includes('disallowed')"
+                enabled: true
+  - name: "PRAH: Project Management Workflow"
+    transitions:
+      - name: "Done"
+        id: "21" # As a last resort, transitions with the same name can be distinguished by their ID. This is brittle, as IDs can vary between cloud instances for identical transitions.
+        conditions:
+          - parameters:
+              id: "142b758a-5cf3-4619-bdd2-cc40219cc94d"
+              config:
+                uuid: "92246de9-f297-49de-9f04-750b7474a277"
+                description: "Check if any comments contain disallowed words"
+                expression: "(issue.comments.filter(comment => comment.body.plainText.toLowerCase().includes('disallowed')).length <= 0)"
+                enabled: true
+      - name: "Done"
+        id: "41"
+        conditions:
+          - parameters:
+              id: "b4fa9a4c-f580-4f97-a73f-d3c7471e62e7"
+              config:
+                uuid: "ead05c99-02fa-43ca-a703-9f1bc3187e04"
+                description: "Check if the issue description contain disallowed words"
+                expression: "!issue.description.plainText.includes('disallowed')"
+                enabled: true
