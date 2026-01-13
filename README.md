@@ -70,8 +70,10 @@ them somewhere that you shouldn't.
 
 ## Configuration and Code
 The Groovy code for your listeners can go in the cloud/src/main/groovy folder. 
-To help with migrations and allow a side-by-side comparison of DataCenter and Cloud scripts, your DataCenter scripts can go in the 
-onprem/src/main/groovy directory.
+
+As an optional step, you may put your DataCenter scripts in the onprem/src/main/groovy directory.
+This is to help with migrations and allow a side-by-side comparison of DataCenter and Cloud scripts, but it is not
+necessary at all in order to use the Development and Deployment Tool.
 
 The configuration for your Cloud scripts is defined in the cloud/src/main/resources/extensions.yaml file.
 
