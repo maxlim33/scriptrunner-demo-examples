@@ -83,6 +83,20 @@ behaviours:
 workflows:
   - name: "Software Simplified Workflow for Project MARK1"
     transitions:
+      - name: "Create"
+        postFunctions:
+          - parameters:
+              id: "3d366ad1-1b69-484c-a82f-17eceda55fc9"
+              config:
+                className: "com.adaptavist.sr.cloud.workflow.UpdateIssue"
+                uuid: "5142a571-74a1-4ceb-b2a6-895b1f17e5f5"
+                enabled: true
+                executionUser: "ADD_ON"
+                condition: "true || false"
+                description: "Add comment to issue"
+                additionalCode: |
+                  import java.time.LocalDateTime
+                  Issues.getByKey(issue.key.toString()).addComment("Comment created from ScriptRunner on ${LocalDateTime.now()}")
       - name: "In Progress"
         postFunctions:
           - parameters:
