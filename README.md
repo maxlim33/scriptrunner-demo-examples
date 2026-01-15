@@ -47,7 +47,8 @@ recommend creating a regular API token without scopes.
 manager.
 
 **Warning:** Atlassian API tokens allow a user to act as you on any instance connected to your Atlassian account.
-Be as protective of this token as you would any password.
+Be as protective of this token as you would any password. Follow best practices and good hygiene for secrets management, 
+including revoking the access token when migration is done.
 
 ### Updating the files
 
