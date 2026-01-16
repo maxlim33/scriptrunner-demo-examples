@@ -2,6 +2,7 @@ scriptfields:
   - description: "Difference between updated date and created date in days"
     uuid: "c5f4766f-23d4-41bc-b4a9-07ed3f167165"
     name: "Date Difference"
+    # Possible scriptedFieldType: RICH_TEXT_FIELD, NUMBER_FIELD, TEXT_FIELD, DATE_FIELD, DATETIME_FIELD
     scriptedFieldType: "TEXT_FIELD"
     path: "CalculateDateDifference.groovy"
 
