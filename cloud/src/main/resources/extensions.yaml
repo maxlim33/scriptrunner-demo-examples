@@ -5,6 +5,12 @@ scriptfields:
     # Possible scriptedFieldType: RICH_TEXT_FIELD, NUMBER_FIELD, TEXT_FIELD, DATE_FIELD, DATETIME_FIELD
     scriptedFieldType: "TEXT_FIELD"
     path: "CalculateDateDifference.groovy"
+  - description: "Script should be stored in the Script Manager"
+    uuid: "a1a1234a-12a1-12ab-a1a1-11ab1a123456"
+    name: "File Scripted Script Field"
+    scriptedFieldType: "TEXT_FIELD"
+    file: "acme/dev/ScriptedFieldScript.groovy"
+
 
 listeners:
   - description: "Add comment on issue creation with support SLA and documentation link"
@@ -33,6 +39,14 @@ listeners:
     executionUser: ADD_ON
     projects:
       - "JRTWO"
+  - description: "A Listener with file script - should be stored in the Script Manager"
+    uuid: "b2b2345b-23b2-23bc-b2b2-22bc2b234567"
+    events:
+      - jira:issue_created
+    file: "acme/dev/EventScript.groovy"
+    executionUser: ADD_ON
+    projects:
+      - "JRTWO"
 
 jobs:
   - uuid: "1b22241f-ada9-4a4e-bce0-0de13a35074c"
@@ -54,6 +68,13 @@ jobs:
     cronExpression: "0 0 * ? * *"
     jql: "statusCategory = Done"
     path: "CommentOnUnresolvedSubtasks.groovy"
+    atlassianUser:
+      accountId: "557058:d2e5bd5c-dc49-41eb-a6f0-5e01093666c1"
+    enabled: true
+  - uuid: "a7b3c8d1-4e2f-4a9c-b5d6-1c8e9f0a2b3c"
+    name: "Job with file script"
+    cronExpression: "0 1 0 1 * ?"
+    file: "acme/dev/JobScript.groovy"
     atlassianUser:
       accountId: "557058:d2e5bd5c-dc49-41eb-a6f0-5e01093666c1"
     enabled: true
@@ -100,6 +121,21 @@ behaviours:
         - "10005"
 
 workflows:
+  - name: "Workflow with file scripts"
+    transitions:
+      - name: "In Progress"
+        postFunctions:
+          - parameters:
+              id: "3f2e1d0c-4b5a-6c7d-8e9f-0a1b2c3d4e5f"
+              config:
+                className: "com.adaptavist.sr.cloud.workflow.UpdateIssue"
+                uuid: "7d6c5b4a-3e2f-1d0c-9b8a-7f6e5d4c3b2a"
+                enabled: true
+                executionUser: "ADD_ON"
+                condition: "true || false"
+                description: "Add comment to issue"
+                additionalCode:
+                  file: "acme/dev/PostFunctionScript.groovy"
   - name: "Software Simplified Workflow for Project MARK1"
     transitions:
       - name: "Create"
@@ -113,9 +149,10 @@ workflows:
                 executionUser: "ADD_ON"
                 condition: "true || false"
                 description: "Add comment to issue"
-                additionalCode: |
-                  import java.time.LocalDateTime
-                  Issues.getByKey(issue.key.toString()).addComment("Comment created from ScriptRunner on ${LocalDateTime.now()}")
+                additionalCode:
+                  script: |
+                    import java.time.LocalDateTime
+                    Issues.getByKey(issue.key.toString()).addComment("Comment created from ScriptRunner on ${LocalDateTime.now()}")
       - name: "In Progress"
         postFunctions:
           - parameters:
@@ -127,7 +164,8 @@ workflows:
                 executionUser: "ADD_ON"
                 condition: "true || false"
                 description: "Add comment to issue"
-                additionalCode: "Issues.getByKey(issue.key.toString()).addComment('Greetings from ScriptRunner')"
+                additionalCode:
+                  script: "Issues.getByKey(issue.key.toString()).addComment('Greetings from ScriptRunner')"
         conditions:
           - parameters:
               id: "4a2d7de4-3b95-40c5-b359-4dab3dd5824a"
@@ -201,3 +239,7 @@ workflows:
                 description: "Check if the issue description contain disallowed words"
                 expression: "!issue.description.plainText.includes('disallowed')"
                 enabled: true
+
+console-scripts:
+  - file: "acme/dev/ConsoleScript1.groovy"
+  - file: "acme/dev/ConsoleScript2.groovy"
