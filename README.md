@@ -107,7 +107,7 @@ tool window in IntelliJ IDEA (or your IDE of choice). There are tasks to deploy 
     ./gradlew cloud:deploy-scriptField-all # Deploy all script fields
     ./gradlew cloud:deploy-job-all # Deploy all jobs
     ./gradlew cloud:deploy-workflow-all # Deploy all workflows
-    ./gradlew cloud:deploy-script-all # Deploy all console scripts
+    ./gradlew cloud:deploy-script-manager-all # Deploy all console scripts
 
 There will also be tasks to deploy individual scripts. This can be useful if you only want to verify your most recent
 change is correct. For example, some of our pre-configured samples will generate tasks like these:
@@ -116,12 +116,11 @@ change is correct. For example, some of our pre-configured samples will generate
     ./gradlew "deploy-scriptField-Date Difference"
     ./gradlew "deploy-listener-Add a definition of done checklist to an issue on creation"
     ./gradlew "deploy-workflow-SMURF_ Project Management Workflow"
+    ./gradlew deploy-script-manager-acme-dev-ConsoleScript1.groovy
 
 For the Gradle task name, listeners are identified by their description. Script fields and script jobs by their name.
+Console scripts are identified by their file path with forward slashes `/` replaced by hyphens `-`.
 
-To deploy an individual ScriptConsole script, you specify using a `scriptPath` param. To upload `path/to/File.groovy` you can run this:
-
-    ./gradlew cloud:deploy-script -PscriptPath=path/to/File.groovy
 
 If there are errors in the YAML, the plugin will fail to apply and log out any errors received on any Gradle task.
 

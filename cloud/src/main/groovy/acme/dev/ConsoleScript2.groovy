@@ -1,6 +1,13 @@
-import com.atlassian.jira.component.ComponentAccessor
+def myself = Users.getLoggedInUser()
 
-def projectManager = ComponentAccessor.projectManager
-def projects = projectManager.projectObjects
+def projectKey = 'TP'
+def roleId = '10002'
 
-log.warn("Another console script: found ${projects.size()} projects")
+def result = post("rest/api/3/project/${projectKey}/role/${roleId}")
+        .header('Content-Type', 'application/json')
+        .body([
+                "user": [myself.accountId]
+        ])
+        .asObject(Map)
+
+result.body
