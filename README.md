@@ -89,7 +89,8 @@ everything that you need to use this project.
 Scripts and their configuration can be deployed to the configured cloud instance using various Gradle tasks.
 
 You'll need to define the configuration for each script manually in `cloud/src/main/resources/extensions.yaml`. 
-Only script fields, listeners, and jobs are supported currently, though support for all features is on the way!
+Most features are supported, with the notable exceptions of Script Fragments and Escalation Services, though support for
+those is on the way!
 
 There are examples in there to start you off, but don't keep them unless you *actually* want those scripts in your
 instance. Likewise, make sure to carefully verify any configuration you get from the Migration Agent or other AI-based 
