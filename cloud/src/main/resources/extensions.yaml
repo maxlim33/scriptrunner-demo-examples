@@ -240,6 +240,6 @@ workflows:
                 expression: "!issue.description.plainText.includes('disallowed')"
                 enabled: true
 
-script-manager:
+additional-scripts:
   - file: "acme/dev/ConsoleScript1.groovy"
   - file: "acme/dev/ConsoleScript2.groovy"
