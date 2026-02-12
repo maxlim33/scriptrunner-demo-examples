@@ -49,6 +49,14 @@ jobs:
     atlassianUser:
       accountId: "557058:d2e5bd5c-dc49-41eb-a6f0-5e01093666c1"
     enabled: true
+  - uuid: "b154deba-5a4f-4ec1-839a-0f61969a266f"
+    name: "JQL Escalation Service"
+    cronExpression: "0 0 * ? * *"
+    jql: "statusCategory = Done"
+    path: "CommentOnUnresolvedSubtasks.groovy"
+    atlassianUser:
+      accountId: "557058:d2e5bd5c-dc49-41eb-a6f0-5e01093666c1"
+    enabled: true
 
 behaviours:
   - name: "Test"
