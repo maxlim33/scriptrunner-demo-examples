@@ -107,6 +107,7 @@ tool window in IntelliJ IDEA (or your IDE of choice). There are tasks to deploy 
     ./gradlew cloud:deploy-scriptField-all # Deploy all script fields
     ./gradlew cloud:deploy-job-all # Deploy all jobs
     ./gradlew cloud:deploy-workflow-all # Deploy all workflows
+    ./gradlew cloud:deploy-script-manager-all # Deploy all additional script manager scripts 
 
 There will also be tasks to deploy individual scripts. This can be useful if you only want to verify your most recent
 change is correct. For example, some of our pre-configured samples will generate tasks like these:
@@ -115,8 +116,11 @@ change is correct. For example, some of our pre-configured samples will generate
     ./gradlew "deploy-scriptField-Date Difference"
     ./gradlew "deploy-listener-Add a definition of done checklist to an issue on creation"
     ./gradlew "deploy-workflow-SMURF_ Project Management Workflow"
+    ./gradlew deploy-script-manager-acme-dev-ConsoleScript1.groovy
 
 For the Gradle task name, listeners are identified by their description. Script fields and script jobs by their name.
+Additional script manager scripts are identified by their file path with forward slashes `/` replaced by hyphens `-`.
+
 
 If there are errors in the YAML, the plugin will fail to apply and log out any errors received on any Gradle task.
 
@@ -149,7 +153,7 @@ To update, open the `settings.gradle` file in this project and edit this set of 
 
 ```gradle
 plugins {
-    id 'com.adaptavist.scriptrunner.migration-settings' version '0.0.15' // Change this version number to the latest release
+    id 'com.adaptavist.scriptrunner.migration-settings' version '0.0.17' // Change this version number to the latest release
 }
 ```
 
@@ -168,8 +172,7 @@ conditions, validators, and post functions will exist alongside ScriptRunner wor
 managed in the extensions.yaml file.
 
 There are a few specific limitations to the workflow implementation currently:
-1. Code must be inlined - you can't specify a `path` to the file like you can with other configuration points yet. [YAML Blocks](https://yaml.org/spec/1.2.2/#812-literal-style) may be used for multi-line scripts.
-2. [Condition groups](https://support.atlassian.com/jira-cloud-administration/docs/configure-advanced-issue-workflows/#Group-conditions) 
+1. [Condition groups](https://support.atlassian.com/jira-cloud-administration/docs/configure-advanced-issue-workflows/#Group-conditions) 
     are not supported yet.
 
 # Known Issues
