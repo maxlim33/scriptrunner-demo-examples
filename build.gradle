@@ -7,11 +7,11 @@ repositories {
     mavenCentral()
 
     maven {
-        url 'https://nexus.adaptavist.net/content/repositories/external/'
+        url = 'https://nexus.adaptavist.net/content/repositories/external/'
     }
 
     maven {
-        url 'https://packages.atlassian.com/maven-public/'
+        url = 'https://packages.atlassian.com/maven-public/'
     }
 }
 

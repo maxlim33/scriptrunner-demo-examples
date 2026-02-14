@@ -82,7 +82,8 @@ recommend creating a regular API token without scopes.
 manager.
 
 **Warning:** Atlassian API tokens allow a user to act as you on any instance connected to your Atlassian account.
-Be as protective of this token as you would any password.
+Be as protective of this token as you would any password. Follow best practices and good hygiene for secrets management, 
+including revoking the access token when migration is done.
 
 ### Updating the files
 
@@ -105,8 +106,10 @@ them somewhere that you shouldn't.
 
 ## Configuration and Code
 The Groovy code for your listeners can go in the cloud/src/main/groovy folder. 
-To help with migrations and allow a side-by-side comparison of DataCenter and Cloud scripts, your DataCenter scripts can go in the 
-onprem/src/main/groovy directory.
+
+As an optional step, you may put your DataCenter scripts in the onprem/src/main/groovy directory.
+This is to help with migrations and allow a side-by-side comparison of DataCenter and Cloud scripts, but it is not
+necessary at all in order to use the Development and Deployment Tool.
 
 The configuration for your Cloud scripts is defined in the cloud/src/main/resources/extensions.yaml file.
 
@@ -121,7 +124,10 @@ everything that you need to use this project.
 Scripts and their configuration can be deployed to the configured cloud instance using various Gradle tasks.
 
 You'll need to define the configuration for each script manually in `cloud/src/main/resources/extensions.yaml`. 
-Only script fields, listeners, and jobs are supported currently, though support for all features is on the way!
+Most features are supported, with the notable exceptions of Script Fragments, though support for those is on the roadmap.
+
+NOTE: Escalation Services are grouped under the `jobs` anchor in the extensions.yaml file. 
+They will be in a distinct spot in the ScriptRunner Cloud UI once deployed. See the [feature documentation](https://docs.adaptavist.com/sr4jc/latest/features/escalation-service) for more details.
 
 There are examples in there to start you off, but don't keep them unless you *actually* want those scripts in your
 instance. Likewise, make sure to carefully verify any configuration you get from the Migration Agent or other AI-based 
@@ -135,6 +141,8 @@ tool window in IntelliJ IDEA (or your IDE of choice). There are tasks to deploy 
     ./gradlew cloud:deploy-listener-all # Deploy all listeners
     ./gradlew cloud:deploy-scriptField-all # Deploy all script fields
     ./gradlew cloud:deploy-job-all # Deploy all jobs
+    ./gradlew cloud:deploy-workflow-all # Deploy all workflows
+    ./gradlew cloud:deploy-script-manager-all # Deploy all additional script manager scripts 
 
 There will also be tasks to deploy individual scripts. This can be useful if you only want to verify your most recent
 change is correct. For example, some of our pre-configured samples will generate tasks like these:
@@ -142,8 +150,12 @@ change is correct. For example, some of our pre-configured samples will generate
     ./gradlew "deploy-job-Create time logging issue"
     ./gradlew "deploy-scriptField-Date Difference"
     ./gradlew "deploy-listener-Add a definition of done checklist to an issue on creation"
+    ./gradlew "deploy-workflow-SMURF_ Project Management Workflow"
+    ./gradlew deploy-script-manager-acme-dev-ConsoleScript1.groovy
 
 For the Gradle task name, listeners are identified by their description. Script fields and script jobs by their name.
+Additional script manager scripts are identified by their file path with forward slashes `/` replaced by hyphens `-`.
+
 
 If there are errors in the YAML, the plugin will fail to apply and log out any errors received on any Gradle task.
 
@@ -176,7 +188,7 @@ To update, open the `settings.gradle` file in this project and edit this set of 
 
 ```gradle
 plugins {
-    id 'com.adaptavist.scriptrunner.migration-settings' version '0.0.8' // Change the version number to the latest release
+    id 'com.adaptavist.scriptrunner.migration-settings' version '0.0.17' // Change this version number to the latest release
 }
 ```
 
@@ -187,6 +199,16 @@ to get the latest version number of the plugin.
 # Further information
 
 For further information read the [documentation on our website](https://docs.adaptavist.com/sms/).
+
+## Working with workflows
+Our assumption is that you will have already run the Jira Cloud Migration Assistant for your instance, and that all of
+your workflows already exist in your target Cloud instance. Likewise, we assume that other apps and Jira native workflow
+conditions, validators, and post functions will exist alongside ScriptRunner workflow functions, but those will not be
+managed in the extensions.yaml file.
+
+There are a few specific limitations to the workflow implementation currently:
+1. [Condition groups](https://support.atlassian.com/jira-cloud-administration/docs/configure-advanced-issue-workflows/#Group-conditions) 
+    are not supported yet.
 
 # Known Issues
 

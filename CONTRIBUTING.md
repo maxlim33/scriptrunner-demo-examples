@@ -14,3 +14,5 @@ can adjust the line in settings.gradle to match the path to where you have that 
 `includeBuild('../sr-for-connect/migration-dev-and-deployment-plugin')` 
 
 With that, you will be able to try out any changes you make to the plugin.
+
+Make sure to update this patch file when you make a new release!

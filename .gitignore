@@ -7,3 +7,4 @@ build
 .idea
 cloud/**/*.js
 cloud/src/main/typescript/behaviours.d.ts
+/cloud/bin/

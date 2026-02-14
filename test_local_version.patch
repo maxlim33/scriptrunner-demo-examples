@@ -19,7 +19,7 @@ index 6aa07a7..eed70fc 100644
  }
  
  plugins {
--    id 'com.adaptavist.scriptrunner.migration-settings' version '0.0.8'
+-    id 'com.adaptavist.scriptrunner.migration-settings' version '0.0.17'
 +    id 'com.adaptavist.scriptrunner.migration-settings'
  }
  

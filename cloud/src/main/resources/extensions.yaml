@@ -2,12 +2,29 @@ scriptfields:
   - description: "Difference between updated date and created date in days"
     uuid: "c5f4766f-23d4-41bc-b4a9-07ed3f167165"
     name: "Date Difference"
+    # Possible scriptedFieldType: RICH_TEXT_FIELD, NUMBER_FIELD, TEXT_FIELD, DATE_FIELD, DATETIME_FIELD
     scriptedFieldType: "TEXT_FIELD"
     path: "CalculateDateDifference.groovy"
+  - description: "Script should be stored in the Script Manager"
+    uuid: "a1a1234a-12a1-12ab-a1a1-11ab1a123456"
+    name: "File Scripted Script Field"
+    scriptedFieldType: "TEXT_FIELD"
+    file: "acme/dev/ScriptedFieldScript.groovy"
+
 
 listeners:
   - description: "Add comment on issue creation with support SLA and documentation link"
     uuid: "9d114a5b-5a28-445f-acd9-5adbdcec1ab1"
+    # Possible events are attachment_created, attachment_deleted, board_configuration_changed, board_created,
+    # board_deleted, board_updated, comment_created, comment_deleted, comment_updated, filter_created, filter_deleted,
+    # filter_updated, jira:issue_created, jira:issue_deleted, jira:issue_updated, jira:issue_updated_gdpr,
+    # issuelink_created, issuelink_deleted, issuetype_created, issuetype_deleted, issuetype_updated,
+    # option_attachments_changed, option_issuelinks_changed, option_subtasks_changed, option_timetracking_changed,
+    # option_unassigned_issues_changed, option_voting_changed, option_watching_changed, project_created, project_deleted,
+    # project_soft_deleted, project_updated, sprint_closed, sprint_created, sprint_deleted, sprint_started,
+    # sprint_updated, user_created, user_deleted, user_updated, jira:version_created, jira:version_deleted,
+    # jira:version_moved, jira:version_released, jira:version_unreleased, jira:version_updated, worklog_created,
+    # worklog_deleted, worklog_updated
     events:
       - jira:issue_created
     path: "CommentOnCreate.groovy"
@@ -22,6 +39,7 @@ listeners:
     executionUser: ADD_ON
     projects:
       - "JRTWO"
+<<<<<<< HEAD
   - description: "Generate letter as Confluence page on transition"
     uuid: "b16f16d3-458c-40bb-8b94-ae8e6a78b3ee"
     events:
@@ -36,6 +54,16 @@ listeners:
     executionUser: ADD_ON
     projects:
       - "HR"
+=======
+  - description: "A Listener with file script - should be stored in the Script Manager"
+    uuid: "b2b2345b-23b2-23bc-b2b2-22bc2b234567"
+    events:
+      - jira:issue_created
+    file: "acme/dev/EventScript.groovy"
+    executionUser: ADD_ON
+    projects:
+      - "JRTWO"
+>>>>>>> upstream/main
 
 jobs:
   - uuid: "1b22241f-ada9-4a4e-bce0-0de13a35074c"
@@ -49,6 +77,21 @@ jobs:
     name: "Create Release"
     cronExpression: "0 0 0 1,15 * ?"
     path: "CreateRelease.groovy"
+    atlassianUser:
+      accountId: "557058:d2e5bd5c-dc49-41eb-a6f0-5e01093666c1"
+    enabled: true
+  - uuid: "b154deba-5a4f-4ec1-839a-0f61969a266f"
+    name: "JQL Escalation Service"
+    cronExpression: "0 0 * ? * *"
+    jql: "statusCategory = Done"
+    path: "CommentOnUnresolvedSubtasks.groovy"
+    atlassianUser:
+      accountId: "557058:d2e5bd5c-dc49-41eb-a6f0-5e01093666c1"
+    enabled: true
+  - uuid: "a7b3c8d1-4e2f-4a9c-b5d6-1c8e9f0a2b3c"
+    name: "Job with file script"
+    cronExpression: "0 1 0 1 * ?"
+    file: "acme/dev/JobScript.groovy"
     atlassianUser:
       accountId: "557058:d2e5bd5c-dc49-41eb-a6f0-5e01093666c1"
     enabled: true
@@ -93,3 +136,127 @@ behaviours:
     mappings:
       "10002":
         - "10005"
+
+workflows:
+  - name: "Workflow with file scripts"
+    transitions:
+      - name: "In Progress"
+        postFunctions:
+          - parameters:
+              id: "3f2e1d0c-4b5a-6c7d-8e9f-0a1b2c3d4e5f"
+              config:
+                className: "com.adaptavist.sr.cloud.workflow.UpdateIssue"
+                uuid: "7d6c5b4a-3e2f-1d0c-9b8a-7f6e5d4c3b2a"
+                enabled: true
+                executionUser: "ADD_ON"
+                condition: ""
+                description: "Add comment to issue"
+                additionalCode:
+                  file: "acme/dev/PostFunctionScript.groovy"
+  - name: "Software Simplified Workflow for Project MARK1"
+    transitions:
+      - name: "Create"
+        postFunctions:
+          - parameters:
+              id: "3d366ad1-1b69-484c-a82f-17eceda55fc9"
+              config:
+                className: "com.adaptavist.sr.cloud.workflow.UpdateIssue"
+                uuid: "5142a571-74a1-4ceb-b2a6-895b1f17e5f5"
+                enabled: true
+                executionUser: "ADD_ON"
+                condition: "true || false"
+                description: "Add comment to issue"
+                additionalCode:
+                  script: |
+                    import java.time.LocalDateTime
+                    Issues.getByKey(issue.key.toString()).addComment("Comment created from ScriptRunner on ${LocalDateTime.now()}")
+      - name: "In Progress"
+        postFunctions:
+          - parameters:
+              id: "5a96894a-204c-416d-8d09-bbbfcb18b8a6"
+              config:
+                className: "com.adaptavist.sr.cloud.workflow.UpdateIssue"
+                uuid: "79aecc0f-b4aa-454a-b91b-4a5c104eadda"
+                enabled: true
+                executionUser: "ADD_ON"
+                condition: "true || false"
+                description: "Add comment to issue"
+                additionalCode:
+                  script: "Issues.getByKey(issue.key.toString()).addComment('Greetings from ScriptRunner')"
+        conditions:
+          - parameters:
+              id: "4a2d7de4-3b95-40c5-b359-4dab3dd5824a"
+              config:
+                uuid: "7a46c9e7-9980-4164-8f85-4717b44fa9b1"
+                description: "Check if any comments contain banned words"
+                expression: "(issue.comments.filter(comment => comment.body.plainText.toLowerCase().includes('banned')).length <= 0)"
+                enabled: true
+        validators:
+          - parameters:
+              id: "b1340bfc-2003-41b2-9beb-621a266b489b"
+              config:
+                uuid: "5c3c30b5-a8e8-4d16-b5eb-c4f4a44fbcf8"
+                description: "Check comments"
+                expression: "(issue.comments.filter(comment => comment.body.plainText.toLowerCase().includes('banned')).length <= 0)"
+                errorMessage: "No banned words in the comments."
+                enabled: true
+          - parameters:
+              id: "414e3381-d974-4286-ac1e-ffa0f895770f"
+              config:
+                uuid: "46a851b6-a532-42c5-bd14-50cb6a235a98"
+                description: "This will always be true. It's just an example. Insert your own validator here."
+                expression: "true && !false"
+                errorMessage: "If this failed ScriptRunner is broken."
+                enabled: true
+  - name: "SMURF: Project Management Workflow"
+    transitions:
+      # In workflows where more than one transition has the same name, you can disambiguate statuses using a sourceStatus, targetStatus
+      # Where necessary, you can also specify a transition type (DIRECTED, GLOBAL, INITIAL)
+      - name: "Done"
+        sourceStatus: "In Progress"
+        targetStatus: "Done"
+        conditions:
+          - parameters:
+              id: "ee623f33-2b06-435f-a336-435dc4a3adeb"
+              config:
+                uuid: "2cff4359-af2d-400a-8de9-3253ba4f5c76"
+                description: "Check if any comments contain disallowed words"
+                expression: "(issue.comments.filter(comment => comment.body.plainText.toLowerCase().includes('disallowed')).length <= 0)"
+                enabled: true
+      - name: "Done"
+        sourceStatus: "To Do"
+        targetStatus: "Done"
+        conditions:
+          - parameters:
+              id: "1efc887c-5190-4961-b51b-abdd1c76cfad"
+              config:
+                uuid: "1105f5a5-d0d8-424a-86a3-20bc59c48556"
+                description: "Check if the issue description contain disallowed words"
+                expression: "!issue.description.plainText.includes('disallowed')"
+                enabled: true
+  - name: "PRAH: Project Management Workflow"
+    transitions:
+      - name: "Done"
+        id: "21" # As a last resort, transitions with the same name can be distinguished by their ID. This is brittle, as IDs can vary between cloud instances for identical transitions.
+        conditions:
+          - parameters:
+              id: "142b758a-5cf3-4619-bdd2-cc40219cc94d"
+              config:
+                uuid: "92246de9-f297-49de-9f04-750b7474a277"
+                description: "Check if any comments contain disallowed words"
+                expression: "(issue.comments.filter(comment => comment.body.plainText.toLowerCase().includes('disallowed')).length <= 0)"
+                enabled: true
+      - name: "Done"
+        id: "41"
+        conditions:
+          - parameters:
+              id: "b4fa9a4c-f580-4f97-a73f-d3c7471e62e7"
+              config:
+                uuid: "ead05c99-02fa-43ca-a703-9f1bc3187e04"
+                description: "Check if the issue description contain disallowed words"
+                expression: "!issue.description.plainText.includes('disallowed')"
+                enabled: true
+
+additional-scripts:
+  - file: "acme/dev/ConsoleScript1.groovy"
+  - file: "acme/dev/ConsoleScript2.groovy"
