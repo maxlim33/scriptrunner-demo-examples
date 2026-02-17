@@ -105,6 +105,7 @@ script configuration. Tasks can either be run from the command line (eg `./gradl
 tool window in IntelliJ IDEA (or your IDE of choice). There are tasks to deploy scripts in bulk:
 
     ./gradlew cloud:deploy-all # Deploy all extensions
+    ./gradlew cloud:deploy-behaviour-all # Deploy all behaviours
     ./gradlew cloud:deploy-listener-all # Deploy all listeners
     ./gradlew cloud:deploy-scriptField-all # Deploy all script fields
     ./gradlew cloud:deploy-job-all # Deploy all jobs
