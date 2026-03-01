@@ -39,7 +39,14 @@ listeners:
     executionUser: ADD_ON
     projects:
       - "JRTWO"
-<<<<<<< HEAD
+  - description: "A Listener with file script - should be stored in the Script Manager"
+    uuid: "b2b2345b-23b2-23bc-b2b2-22bc2b234567"
+    events:
+      - jira:issue_created
+    file: "acme/dev/EventScript.groovy"
+    executionUser: ADD_ON
+    projects:
+      - "JRTWO"
   - description: "Generate letter as Confluence page on transition"
     uuid: "b16f16d3-458c-40bb-8b94-ae8e6a78b3ee"
     events:
@@ -54,16 +61,31 @@ listeners:
     executionUser: ADD_ON
     projects:
       - "HR"
-=======
-  - description: "A Listener with file script - should be stored in the Script Manager"
-    uuid: "b2b2345b-23b2-23bc-b2b2-22bc2b234567"
+  - description: "Send own comment as an email"
+    uuid: "249e28b6-1cf0-476e-bd30-3ea95a501d16"
     events:
-      - jira:issue_created
-    file: "acme/dev/EventScript.groovy"
+      - comment_created
+    path: "SendOwnCommentAsEmail.groovy"
     executionUser: ADD_ON
     projects:
-      - "JRTWO"
->>>>>>> upstream/main
+      - "SS"
+  - description: "Send own issue as an email"
+    uuid: "039d8982-53b5-486d-a63a-8faf3b3b4707"
+    events:
+      - jira:issue_created
+    path: "SendNewOwnIssueAsEmail.groovy"
+    executionUser: ADD_ON
+    projects:
+      - "SS"
+  - description: "Perform some setups after receiving external mails"
+    uuid: "7d5dd5b7-9cd8-4b08-a965-3f4ef7273e38"
+    events:
+      - jira:issue_created
+      - comment_created
+    path: "PerformIncomingMailSetups.groovy"
+    executionUser: ADD_ON
+    projects:
+      - "SS"
 
 jobs:
   - uuid: "1b22241f-ada9-4a4e-bce0-0de13a35074c"
@@ -260,3 +282,6 @@ workflows:
 additional-scripts:
   - file: "acme/dev/ConsoleScript1.groovy"
   - file: "acme/dev/ConsoleScript2.groovy"
+  - file: "com/maxlim33/JiraUtils.groovy"
+  - file: "com/maxlim33/JsmUtils.groovy"
+  - file: "com/maxlim33/MailUtils.groovy"
