@@ -125,6 +125,8 @@ Scripts and their configuration can be deployed to the configured cloud instance
 
 You'll need to define the configuration for each script manually in `cloud/src/main/resources/extensions.yaml`. 
 Most features are supported, with the notable exceptions of Script Fragments, though support for those is on the roadmap.
+See https://docs.adaptavist.com/sms/latest/scriptrunner-dev-and-deployment-tool/supported-features-and-limitations for
+the up-to-date list of supported features.
 
 NOTE: Escalation Services are grouped under the `jobs` anchor in the extensions.yaml file. 
 They will be in a distinct spot in the ScriptRunner Cloud UI once deployed. See the [feature documentation](https://docs.adaptavist.com/sr4jc/latest/features/escalation-service) for more details.
@@ -138,6 +140,7 @@ script configuration. Tasks can either be run from the command line (eg `./gradl
 tool window in IntelliJ IDEA (or your IDE of choice). There are tasks to deploy scripts in bulk:
 
     ./gradlew cloud:deploy-all # Deploy all extensions
+    ./gradlew cloud:deploy-behaviour-all # Deploy all behaviours
     ./gradlew cloud:deploy-listener-all # Deploy all listeners
     ./gradlew cloud:deploy-scriptField-all # Deploy all script fields
     ./gradlew cloud:deploy-job-all # Deploy all jobs
